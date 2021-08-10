@@ -13,29 +13,34 @@ const path = require('path');
 const atob = require('atob')
 const fs = require('fs');
 const app = express();
+const bodyparser = require('body-parser');
 
-app.get("/api/upload/*", (req, res) => {
-    let p = url.parse(req.url);
-    let args = p.pathname.split("/");
-    if (args.length >= 5) {
-        let name = Buffer.from(args[3], 'base64').toString()
-        console.log(name + "\n" + args[3])
-        let code = "";
-        for (let i = 4; i < args.length; i++) {
-            code += args[i] + "/";
-        }
-        if (fs.existsSync(path.join(__dirname, '../public', 'templates/', name + '.ic'))) {
-            res.status(501)
-            res.send("Already Exists")
-        } else {
-            fs.writeFileSync(path.join(__dirname, '../public', 'templates/', name + '.ic'), code);
-            res.status(200);
-            res.send("Successful")
-        }
-    } else {
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({extended: true}))
+
+app.post("/api/upload", (req, res) => {
+    let o = req.body;
+    let name = o.name
+    let code = o.code;
+    if (fs.existsSync(path.join(__dirname, '../public', 'templates/', name + '.ic'))) {
         res.status(501)
-        res.send("Invalid URL")
+        res.send("Already Exists")
+    } else {
+        fs.writeFileSync(path.join(__dirname, '../public', 'templates/', name + '.ic'), code);
+        let j = JSON.parse(fs.readFileSync(path.join(__dirname, '../public/templates.json')).toString());
+        j[name] = {
+            verified: false,
+            directURL: "/templates/" + name + ".ic",
+            uploaded: new Date()
+        }
+        fs.writeFileSync(path.join(__dirname, '../public/templates.json'), JSON.stringify(j))
+        res.status(200);
+        res.send("Successful")
     }
+})
+
+app.get("/", (res) => {
+    res.charset = "utf-8"
 })
 
 app.use("/", express.static(path.join(__dirname, '../public')))
