@@ -12,8 +12,11 @@ const url = require('url')
 const path = require('path');
 const atob = require('atob')
 const fs = require('fs');
+const cors = require('cors')
 const app = express();
 const bodyparser = require('body-parser');
+
+app.use(cors())
 
 app.use("/", express.static(path.join(__dirname, '../public')))
 
