@@ -26,6 +26,7 @@ app.use(bodyparser.urlencoded({extended: true}))
 
 app.post("/api/upload", (req, res) => {
     let o = req.body;
+    let type = o.type;
     let name = o.name
     let code = o.code;
     if (fs.existsSync(path.join(__dirname, '../public', 'templates/', name + '.ic'))) {
@@ -37,7 +38,8 @@ app.post("/api/upload", (req, res) => {
         j[name] = {
             verified: false,
             directURL: "/templates/" + name + ".ic",
-            uploaded: new Date()
+            uploaded: new Date(),
+            type: type
         }
         fs.writeFileSync(path.join(__dirname, '../public/templates.json'), JSON.stringify(j))
         res.status(200);
