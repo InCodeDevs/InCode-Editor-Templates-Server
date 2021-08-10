@@ -49,4 +49,4 @@ app.use("/", serverIndex(path.join(__dirname, '../public'), {
     icons: true
 }))
 
-app.listen(process.env.PORT)
+app.listen(process.env.PORT, "0.0.0.0")
