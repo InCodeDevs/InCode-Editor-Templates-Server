@@ -15,6 +15,12 @@ const fs = require('fs');
 const app = express();
 const bodyparser = require('body-parser');
 
+app.use("/", express.static(path.join(__dirname, '../public')))
+
+app.use("/", serverIndex(path.join(__dirname, '../public'), {
+    icons: true
+}))
+
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended: true}))
 
@@ -38,15 +44,5 @@ app.post("/api/upload", (req, res) => {
         res.send("Successful")
     }
 })
-
-app.get("/", (res) => {
-    res.charset = "utf-8"
-})
-
-app.use("/", express.static(path.join(__dirname, '../public')))
-
-app.use("/", serverIndex(path.join(__dirname, '../public'), {
-    icons: true
-}))
 
 app.listen(process.env.PORT, "0.0.0.0")
