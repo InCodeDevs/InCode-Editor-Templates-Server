@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/InCodeDevs/InCode-Editor-Templates-Server/issues"
   },
-  "homepage": "https://github.com/InCodeDevs/InCode-Editor-Templates-Server#readme"
+  "homepage": "https://github.com/InCodeDevs/InCode-Editor-Templates-Server#readme",
+  "dependencies": {
+    "atob": "^2.1.2",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "serve-index": "^1.9.1"
+  }
 }

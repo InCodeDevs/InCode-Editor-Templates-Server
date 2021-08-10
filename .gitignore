@@ -1,0 +1,10 @@
+
+# node js
+node_modules
+
+# webstorm
+.idea
+
+# other files
+.env
+public
