@@ -1,6 +1,8 @@
 # InCode Editor Template Server
 This is the official Template Server for the InCode Editor
 
+## Merged into ![InCodeDevs/Editor](https://github.com/InCodeDevs/Editor)
+
 ## Using
 
 ```shell
